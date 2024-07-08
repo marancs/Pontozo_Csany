@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel ="clr-namespace:Pontozo.ViewModel"
+             xmlns:model="clr-namespace:Pontozo.Model"
+             x:DataType="viewmodel:DetailViewModel"
+             x:Class="Pontozo.View.DetailView"
+             Loaded="ContentPage_Loaded"
+             Title="Szerkesztés"
+             BackgroundColor="{Binding Hatter}">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+          ColumnDefinitions="Auto,Auto"
+          HeightRequest="700"
+          HorizontalOptions="CenterAndExpand"
+          >
+        <Frame Grid.Row="0"
+               Grid.ColumnSpan="2"
+               WidthRequest="360"
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand">
+            <VerticalStackLayout>
+                <Label Text="Szinek:"/>
+                <CollectionView
+                 ItemsSource="{Binding Szinek}"
+                 SelectionMode="None"
+                 ItemsLayout="HorizontalList"
+                 HorizontalOptions="CenterAndExpand"
+                 Grid.Row="1"
+                 HeightRequest="80">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="Color">
+                        <Label WidthRequest="30"
+                   HeightRequest="100"
+                   BackgroundColor="{Binding .}"
+                    >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                          Command="{Binding Source={
+                                                                RelativeSource AncestorType={
+                                                                x:Type viewmodel:DetailViewModel}
+                                                                }, Path=SetBackgroundCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Frame Grid.Row="1"
+               Grid.ColumnSpan="2"
+               Margin="0,10,0,0">
+            <VerticalStackLayout>
+                <Label Text="Név:"/>
+                <Entry Text="{Binding P.Name}"
+                   FontSize="30"
+                   HorizontalOptions="Center"
+                   WidthRequest="300"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame Grid.Row="2"
+               Grid.ColumnSpan="2"
+                Margin="0,10,0,0">
+            <VerticalStackLayout>
+                <Label Text="Pont:"/>
+                <Entry Text="{Binding P.Ertek}"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    WidthRequest="50"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame Grid.Row="3"
+               Grid.Column="0"
+               Margin="0,10,10,0">
+            <VerticalStackLayout>
+                <Label Text="Növekmény:"/>
+                <Entry Text="{Binding P.Novekmeny}"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame Grid.Row="3"
+           Grid.Column="1"
+           Margin="10,10,0,0">
+            <Button Text="Pont nullázása"
+                    Command="{Binding NullazCommand}"/>
+        </Frame>
+        <Button Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Margin="0,20,0,0"
+                HeightRequest="50"
+                Text="Mentés"
+                Command="{Binding GoBackCommand}"/>
+    </Grid>
+</ContentPage>

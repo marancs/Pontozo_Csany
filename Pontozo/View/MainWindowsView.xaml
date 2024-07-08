@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Pontozo.Model"
+             xmlns:viewmodel="clr-namespace:Pontozo.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
+             x:Class="Pontozo.View.MainWindowsView">
+
+    <Grid ColumnDefinitions="*"
+          ColumnSpacing="10"
+          RowDefinitions="60,Auto"
+          BackgroundColor="White"
+          HorizontalOptions="Center">
+        <HorizontalStackLayout Grid.Row="0"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HeightRequest="60">
+            <Button Text=""
+                    x:Name="AddGomb"
+                    ImageSource="plusw.png"
+                    Clicked="AddGomb_Clicked"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    BackgroundColor="Blue"
+                    TextColor="Black"
+                    Margin="0,0,10,0"/>
+            <Button Text=""
+                    x:Name="MinusGomb"
+                    ImageSource="minusw.png"
+                    IsEnabled="{Binding IsMinus }"
+                    Clicked="MinusGomb_Clicked"
+                    HeightRequest="50"
+                    WidthRequest="100"
+                    FontSize="Large"
+                    Background="Red"
+                    TextColor="White"
+                    Margin="0,0,10,0"/>
+            <Button Text=""
+                    ImageSource="settings.png"
+                    HeightRequest="50"
+                    WidthRequest="100"
+                    FontSize="Large"
+                    BackgroundColor="LightGray"
+                    TextColor="White"
+                    Margin="0,0,0,0"/>
+        </HorizontalStackLayout>
+        <CollectionView
+                    ItemsSource="{Binding PontLista}"
+                    SelectionMode="None"
+                    Grid.Row="1"
+                    HeightRequest="1000"
+                    WidthRequest="1000">
+            <CollectionView.EmptyView>
+                <Image HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                HeightRequest="400"
+                                WidthRequest="400"
+                                Source="calc.jpg" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Pont">
+                    <Grid RowDefinitions="60,150,10"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="20"
+                            BackgroundColor="{Binding Hatter}">
+                        <Label Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Margin="0,10,0,0"
+                                Text="{Binding Name}"
+                                Style="{StaticResource LargeLabel}"
+                                HorizontalOptions="CenterAndExpand"/>
+                        <Image Grid.Row="0"
+                                Grid.Column="2"
+                                Source="pencil.png"
+                                WidthRequest="30"
+                                HeightRequest="30"
+                                Margin="-150,-15,0,0">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter ="{Binding .}"
+                                                        Command="{Binding Source={
+                                                                          RelativeSource AncestorType={
+                                                                          x:Type viewmodel:MainViewModel}
+                                                                          }, Path=GoToDetailsCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Button Grid.Row="1"
+                                Grid.Column="0"
+                                Text=""
+                                ImageSource="minusw.png"
+                                VerticalOptions="Start"
+                                HeightRequest="100"
+                                WidthRequest="150"
+                                Margin="100,-10,0,0"
+                                CommandParameter="{Binding .}"
+                                Command="{Binding Source={
+                                            RelativeSource AncestorType={
+                                            x:Type viewmodel:MainViewModel}
+                                            }, Path=DecreaseValueCommand}"
+                 
+                        />
+                        <Label Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding Ertek}"
+                                Style="{StaticResource LargeLabel}"
+                                MinimumWidthRequest="80"
+                                MaximumWidthRequest="150"
+                                HeightRequest="80"
+                                HorizontalOptions="Center"
+                                Margin="0,0,150,40"
+                        />
+                        <Button Grid.Row="1"
+                                Grid.Column="2"
+                                Text=""
+                                ImageSource="plusw.png"
+                                HeightRequest="100"
+                                VerticalOptions="Start"
+                                Margin="-300,0,0,0"
+                                WidthRequest="150"
+                                CommandParameter="{Binding .}"
+                                Command="{Binding Source={
+                                        RelativeSource AncestorType={
+                                        x:Type viewmodel:MainViewModel}
+                                        }, Path=IncrementValueCommand}" 
+                 
+                         />
+                        <Label Grid.Row="2"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="White"
+                                VerticalOptions="FillAndExpand"
+                                HeightRequest="30"
+                        />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentView>
